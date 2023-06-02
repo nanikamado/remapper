@@ -148,9 +148,9 @@ dependencies = [
 
 [[package]]
 name = "kiri"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56b1a59253d173acc190b50591062a3ceff23fd85130fc613b5c12a28d2e188c"
+checksum = "97fdff94ebab63de24f26820ddfe969255ab1c6461cc07f99f0200fa00002de9"
 dependencies = [
  "evdev",
  "evdev-keys",

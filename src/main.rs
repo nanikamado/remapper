@@ -9,7 +9,7 @@ use std::iter;
 enum StateGeta {
     Normal,
     JpInput,
-    JpInputWithModifires,
+    JpInputWithModifiers,
 }
 
 const THRESHOLD: u32 = 50;
@@ -22,7 +22,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[KEY_S], &[KEY_T, KEY_O]),
         (&[KEY_D], &[KEY_K, KEY_A]),
         (&[KEY_F], &[KEY_N, KEY_N]),
-        (&[KEY_G], &[KEY_L, KEY_T, KEY_U]),
+        (&[KEY_G], &[KEY_X, KEY_T, KEY_U]),
         (&[KEY_D, KEY_H], &[KEY_H, KEY_E]),
         (&[KEY_D, KEY_J], &[KEY_A]),
         (&[KEY_D, KEY_SEMICOLON], &[KEY_E]),
@@ -36,13 +36,13 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[KEY_D, KEY_I], &[KEY_Y, KEY_O]),
         (&[KEY_D, KEY_O], &[KEY_M, KEY_I]),
         (&[KEY_D, KEY_P], &[KEY_W, KEY_E]),
-        (&[KEY_D, KEY_LEFTBRACE], &[KEY_U, KEY_L, KEY_O]),
+        (&[KEY_D, KEY_LEFTBRACE], &[KEY_U, KEY_X, KEY_O]),
         (&[KEY_H], &[KEY_K, KEY_U]),
         (&[KEY_J], &[KEY_U]),
         (&[KEY_K], &[KEY_I]),
         (&[KEY_L], &[KEY_S, KEY_H, KEY_I]),
         (&[KEY_SEMICOLON], &[KEY_N, KEY_A]),
-        (&[KEY_I, KEY_1], &[KEY_L, KEY_Y, KEY_U]),
+        (&[KEY_I, KEY_1], &[KEY_X, KEY_Y, KEY_U]),
         (&[KEY_I, KEY_2], &[KEY_B, KEY_Y, KEY_A]),
         (&[KEY_I, KEY_3], &[KEY_B, KEY_Y, KEY_U]),
         (&[KEY_I, KEY_4], &[KEY_B, KEY_Y, KEY_O]),
@@ -58,11 +58,11 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[KEY_I, KEY_C], &[KEY_S, KEY_H, KEY_A]),
         (&[KEY_I, KEY_V], &[KEY_K, KEY_Y, KEY_A]),
         (&[KEY_I, KEY_B], &[KEY_C, KEY_H, KEY_A]),
-        (&[KEY_K, KEY_1], &[KEY_L, KEY_A]),
-        (&[KEY_K, KEY_2], &[KEY_L, KEY_I]),
-        (&[KEY_K, KEY_3], &[KEY_L, KEY_U]),
-        (&[KEY_K, KEY_4], &[KEY_L, KEY_E]),
-        (&[KEY_K, KEY_5], &[KEY_L, KEY_O]),
+        (&[KEY_K, KEY_1], &[KEY_X, KEY_A]),
+        (&[KEY_K, KEY_2], &[KEY_X, KEY_I]),
+        (&[KEY_K, KEY_3], &[KEY_X, KEY_U]),
+        (&[KEY_K, KEY_4], &[KEY_X, KEY_E]),
+        (&[KEY_K, KEY_5], &[KEY_X, KEY_O]),
         (&[KEY_K, KEY_A], &[KEY_H, KEY_O]),
         (&[KEY_K, KEY_S], &[KEY_J, KEY_I]),
         (&[KEY_K, KEY_D], &[KEY_R, KEY_E]),
@@ -78,7 +78,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[KEY_K, KEY_C], &[KEY_B, KEY_O]),
         (&[KEY_K, KEY_V], &[KEY_M, KEY_U]),
         (&[KEY_K, KEY_B], &[KEY_F, KEY_O]),
-        (&[KEY_L, KEY_1], &[KEY_L, KEY_Y, KEY_A]),
+        (&[KEY_L, KEY_1], &[KEY_X, KEY_Y, KEY_A]),
         (&[KEY_L, KEY_2], &[KEY_M, KEY_Y, KEY_A]),
         (&[KEY_L, KEY_3], &[KEY_M, KEY_Y, KEY_U]),
         (&[KEY_L, KEY_4], &[KEY_M, KEY_Y, KEY_O]),
@@ -91,8 +91,8 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[KEY_L, KEY_Q], &[KEY_D, KEY_I]),
         (&[KEY_L, KEY_W], &[KEY_M, KEY_E]),
         (&[KEY_L, KEY_E], &[KEY_K, KEY_E]),
-        (&[KEY_L, KEY_R], &[KEY_T, KEY_E, KEY_L, KEY_I]),
-        (&[KEY_L, KEY_T], &[KEY_D, KEY_E, KEY_L, KEY_I]),
+        (&[KEY_L, KEY_R], &[KEY_T, KEY_E, KEY_X, KEY_I]),
+        (&[KEY_L, KEY_T], &[KEY_D, KEY_E, KEY_X, KEY_I]),
         (&[KEY_L, KEY_Z], &[KEY_Z, KEY_E]),
         (&[KEY_L, KEY_X], &[KEY_Z, KEY_A]),
         (&[KEY_L, KEY_C], &[KEY_G, KEY_I]),
@@ -103,7 +103,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[KEY_COMMA], &[KEY_D, KEY_E]),
         (&[KEY_DOT], &[KEY_DOT]),
         (&[KEY_SLASH], &[KEY_B, KEY_U]),
-        (&[KEY_O, KEY_1], &[KEY_L, KEY_Y, KEY_O]),
+        (&[KEY_O, KEY_1], &[KEY_X, KEY_Y, KEY_O]),
         (&[KEY_O, KEY_2], &[KEY_P, KEY_Y, KEY_A]),
         (&[KEY_O, KEY_3], &[KEY_P, KEY_Y, KEY_U]),
         (&[KEY_O, KEY_4], &[KEY_P, KEY_Y, KEY_O]),
@@ -166,6 +166,12 @@ fn mk_config() -> RemapLayer<StateGeta> {
         (&[Normal], &[KEY_A, KEY_K], &[KEY_HOME], None),
         (&[Normal], &[KEY_F, KEY_SEMICOLON], &[KEY_END], None),
         (&[Normal], &[KEY_A, KEY_J], &[KEY_HOME], None),
+        (
+            &[Normal, JpInput, JpInputWithModifiers],
+            &[KEY_F15],
+            &[KEY_GRAVE],
+            None,
+        ),
     ];
     let key_config_r = {
         let mut k = key_config_r.to_vec();
@@ -315,10 +321,8 @@ fn mk_config() -> RemapLayer<StateGeta> {
             &[JpInput],
             [KEY_D, KEY_S],
             vec![
-                KeyInput::press(KEY_LEFTCTRL),
-                KeyInput::press(KEY_INSERT),
-                KeyInput::release(KEY_INSERT),
-                KeyInput::release(KEY_LEFTCTRL),
+                KeyInput::press(KEY_KATAKANAHIRAGANA),
+                KeyInput::release(KEY_KATAKANAHIRAGANA),
                 KeyInput::press(KEY_LEFTMETA),
                 KeyInput::press(KEY_SPACE),
                 KeyInput::release(KEY_SPACE),
@@ -341,8 +345,8 @@ fn mk_config() -> RemapLayer<StateGeta> {
         .iter()
         .flat_map(|key| {
             [
-                (JpInput, KeyInput::press(*key), Some(JpInputWithModifires)),
-                (JpInputWithModifires, KeyInput::release(*key), Some(JpInput)),
+                (JpInput, KeyInput::press(*key), Some(JpInputWithModifiers)),
+                (JpInputWithModifiers, KeyInput::release(*key), Some(JpInput)),
             ]
             .map(|(c, i, t)| SingleRemapEntry {
                 condition: c,
@@ -357,27 +361,33 @@ fn mk_config() -> RemapLayer<StateGeta> {
             .iter()
             .filter(|(_, i, _, _)| i.len() == 2)
             .flat_map(|(cs, i, o, t)| {
-                cs.iter().map(move |c| PairRemapEntry {
-                    condition: *c,
-                    input: [KeyInput::press(i[0]), KeyInput::press(i[1])],
-                    output: o
-                        .iter()
-                        .flat_map(|key| [KeyInput::press(*key), KeyInput::release(*key)])
-                        .collect(),
-                    transition: t.unwrap_or(*c),
-                    threshold: THRESHOLD,
+                cs.iter().flat_map(move |c| {
+                    PairRemapEntry {
+                        condition: *c,
+                        input: [KeyInput::press(i[0]), KeyInput::press(i[1])],
+                        output: o
+                            .iter()
+                            .flat_map(|key| [KeyInput::press(*key), KeyInput::release(*key)])
+                            .collect(),
+                        transition: t.unwrap_or(*c),
+                        threshold: THRESHOLD,
+                    }
+                    .order_insensitive()
                 })
             })
             .chain(
                 pair_keys_with_modifiers_config
                     .iter()
                     .flat_map(|(cs, i, o, t)| {
-                        cs.iter().map(move |c| PairRemapEntry {
-                            condition: *c,
-                            input: i.map(KeyInput::press),
-                            output: o.clone(),
-                            transition: t.unwrap_or(*c),
-                            threshold: THRESHOLD,
+                        cs.iter().flat_map(move |c| {
+                            PairRemapEntry {
+                                condition: *c,
+                                input: i.map(KeyInput::press),
+                                output: o.clone(),
+                                transition: t.unwrap_or(*c),
+                                threshold: THRESHOLD,
+                            }
+                            .order_insensitive()
                         })
                     }),
             )
@@ -411,6 +421,76 @@ fn mk_config() -> RemapLayer<StateGeta> {
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+enum StateGrave {
+    Normal,
+    Grave,
+    Grave1,
+    Grave2,
+}
+
+fn config_grave_arrow() -> RemapLayer<StateGrave> {
+    use StateGrave::*;
+    let grave_side: [(_, _, &[Key], _); 8] = [
+        (Grave, KEY_J, &[KEY_LEFTMETA], KEY_PAGEUP),
+        (Grave, KEY_L, &[KEY_LEFTMETA], KEY_PAGEDOWN),
+        (Grave1, KEY_J, &[KEY_LEFTMETA, KEY_LEFTSHIFT], KEY_PAGEUP),
+        (Grave1, KEY_L, &[KEY_LEFTMETA, KEY_LEFTSHIFT], KEY_PAGEDOWN),
+        (Grave2, KEY_J, &[KEY_LEFTMETA, KEY_LEFTSHIFT], KEY_LEFT),
+        (Grave2, KEY_L, &[KEY_LEFTMETA, KEY_LEFTSHIFT], KEY_RIGHT),
+        (Grave2, KEY_I, &[KEY_LEFTMETA, KEY_LEFTSHIFT], KEY_UP),
+        (Grave2, KEY_K, &[KEY_LEFTMETA, KEY_LEFTSHIFT], KEY_DOWN),
+    ];
+    let grave_side = grave_side.iter().map(|&(c, i, o1, o2)| SingleRemapEntry {
+        condition: c,
+        input: KeyInput::press(i),
+        output: o1
+            .iter()
+            .map(|o1| KeyInput::press(*o1))
+            .chain(vec![KeyInput::press(o2), KeyInput::release(o2)])
+            .chain(o1.iter().map(|o1| KeyInput::release(*o1)))
+            .collect(),
+        transition: c,
+    });
+    let single_remap_entries: &[(&[StateGrave], KeyInput, &[KeyInput], StateGrave)] = &[
+        (&[Normal, Grave], KeyInput::press(KEY_GRAVE), &[], Grave),
+        (
+            &[Grave, Grave1, Grave2],
+            KeyInput::press(KEY_1),
+            &[],
+            Grave1,
+        ),
+        (
+            &[Grave, Grave1, Grave2],
+            KeyInput::press(KEY_2),
+            &[],
+            Grave2,
+        ),
+        (
+            &[Normal, Grave, Grave1, Grave2],
+            KeyInput::release(KEY_GRAVE),
+            &[],
+            Normal,
+        ),
+        (&[Grave1], KeyInput::release(KEY_1), &[], Grave),
+        (&[Grave1], KeyInput::release(KEY_2), &[], Grave),
+    ];
+    let single_hotkyes = single_remap_entries.iter().flat_map(|(c, i, o, t)| {
+        c.iter().map(move |c| SingleRemapEntry {
+            condition: *c,
+            input: *i,
+            output: o.to_vec(),
+            transition: *t,
+        })
+    });
+    RemapLayer {
+        pair_remap_entries: Vec::new(),
+        single_remap_entries: single_hotkyes.into_iter().chain(grave_side).collect(),
+        layer_name: "grave arrows",
+        initial_state: Normal,
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
 enum StateCapsLock {
     Normal,
     CL,
@@ -418,65 +498,98 @@ enum StateCapsLock {
     Cle,
     Clr,
     Clf,
+    ClTab,
 }
 
 fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
     use StateCapsLock::*;
-    let capslock_side = [
-        (CL, KEY_I, None, KEY_UP),
-        (CL, KEY_J, None, KEY_LEFT),
-        (CL, KEY_K, None, KEY_DOWN),
-        (CL, KEY_L, None, KEY_RIGHT),
-        (CL, KEY_ENTER, Some(KEY_LEFTCTRL), KEY_S),
-        (CL, KEY_N, Some(KEY_LEFTCTRL), KEY_C),
-        (CL, KEY_M, Some(KEY_LEFTCTRL), KEY_V),
-        (CL, KEY_U, Some(KEY_LEFTCTRL), KEY_Z),
-        (CL, KEY_O, Some(KEY_LEFTCTRL), KEY_Y),
-        (CL, KEY_DOT, Some(KEY_LEFTCTRL), KEY_DOT),
-        (Cle, KEY_I, Some(KEY_LEFTCTRL), KEY_UP),
-        (Cle, KEY_J, Some(KEY_LEFTCTRL), KEY_LEFT),
-        (Cle, KEY_K, Some(KEY_LEFTCTRL), KEY_DOWN),
-        (Cle, KEY_L, Some(KEY_LEFTCTRL), KEY_RIGHT),
-        (Clr, KEY_I, Some(KEY_LEFTMETA), KEY_I),
-        (Clr, KEY_J, Some(KEY_LEFTMETA), KEY_J),
-        (Clr, KEY_K, Some(KEY_LEFTMETA), KEY_K),
-        (Clr, KEY_L, Some(KEY_LEFTMETA), KEY_L),
-        (Clf, KEY_I, None, KEY_ESC),
-        (Clf, KEY_J, None, KEY_HOME),
-        (Clf, KEY_K, None, KEY_ESC),
-        (Clf, KEY_L, None, KEY_END),
-        (Clw, KEY_J, Some(KEY_LEFTMETA), KEY_PAGEUP),
-        (Clw, KEY_L, Some(KEY_LEFTMETA), KEY_PAGEDOWN),
+    let capslock_side: [(_, _, &[_], _); 33] = [
+        (CL, KEY_I, &[], KEY_UP),
+        (CL, KEY_J, &[], KEY_LEFT),
+        (CL, KEY_K, &[], KEY_DOWN),
+        (CL, KEY_L, &[], KEY_RIGHT),
+        (CL, KEY_GRAVE, &[], KEY_F15),
+        (CL, KEY_ENTER, &[KEY_LEFTCTRL], KEY_S),
+        (CL, KEY_N, &[KEY_LEFTCTRL], KEY_C),
+        (CL, KEY_M, &[KEY_LEFTCTRL], KEY_V),
+        (CL, KEY_U, &[KEY_LEFTCTRL], KEY_Z),
+        (CL, KEY_O, &[KEY_LEFTCTRL], KEY_Y),
+        (CL, KEY_DOT, &[KEY_LEFTCTRL], KEY_DOT),
+        (CL, KEY_P, &[KEY_LEFTCTRL], KEY_P),
+        (CL, KEY_COMMA, &[KEY_LEFTCTRL], KEY_F8),
+        (CL, KEY_H, &[KEY_LEFTCTRL], KEY_F9),
+        (CL, KEY_Y, &[KEY_LEFTCTRL], KEY_F10),
+        (CL, KEY_LEFTBRACE, &[KEY_LEFTCTRL, KEY_LEFTALT], KEY_MINUS),
+        (CL, KEY_RIGHTBRACE, &[KEY_LEFTSHIFT, KEY_LEFTCTRL], KEY_RO),
+        (Cle, KEY_I, &[KEY_LEFTCTRL], KEY_UP),
+        (Cle, KEY_J, &[KEY_LEFTCTRL], KEY_LEFT),
+        (Cle, KEY_K, &[KEY_LEFTCTRL], KEY_DOWN),
+        (Cle, KEY_L, &[KEY_LEFTCTRL], KEY_RIGHT),
+        (Clr, KEY_I, &[KEY_LEFTMETA], KEY_I),
+        (Clr, KEY_J, &[KEY_LEFTMETA], KEY_J),
+        (Clr, KEY_K, &[KEY_LEFTMETA], KEY_K),
+        (Clr, KEY_L, &[KEY_LEFTMETA], KEY_L),
+        (Clf, KEY_I, &[], KEY_ESC),
+        (Clf, KEY_J, &[], KEY_HOME),
+        (Clf, KEY_K, &[], KEY_ESC),
+        (Clf, KEY_L, &[], KEY_END),
+        (Clw, KEY_J, &[KEY_LEFTCTRL], KEY_PAGEUP),
+        (Clw, KEY_L, &[KEY_LEFTCTRL], KEY_PAGEDOWN),
+        (ClTab, KEY_J, &[KEY_LEFTCTRL], KEY_PAGEUP),
+        (ClTab, KEY_L, &[KEY_LEFTCTRL], KEY_PAGEDOWN),
     ];
     let capslock_side = capslock_side
         .iter()
         .map(|&(c, i, o1, o2)| SingleRemapEntry {
             condition: c,
             input: KeyInput::press(i),
-            output: if let Some(o1) = o1 {
-                vec![
-                    KeyInput::press(o1),
-                    KeyInput::press(o2),
-                    KeyInput::release(o2),
-                    KeyInput::release(o1),
-                ]
-            } else {
-                vec![KeyInput::press(o2), KeyInput::release(o2)]
-            },
+            output: o1
+                .iter()
+                .map(|o1| KeyInput::press(*o1))
+                .chain(vec![KeyInput::press(o2), KeyInput::release(o2)])
+                .chain(o1.iter().map(|o1| KeyInput::release(*o1)))
+                .collect(),
             transition: c,
         });
     let single_remap_entries: &[(&[StateCapsLock], KeyInput, &[KeyInput], StateCapsLock)] = &[
         (&[Normal, CL], KeyInput::press(KEY_CAPSLOCK), &[], CL),
-        (&[CL, Cle, Clr, Clf, Clw], KeyInput::press(KEY_E), &[], Cle),
-        (&[CL, Cle, Clr, Clf, Clw], KeyInput::press(KEY_R), &[], Clr),
-        (&[CL, Cle, Clr, Clf, Clw], KeyInput::press(KEY_F), &[], Clf),
-        (&[CL, Cle, Clr, Clf, Clw], KeyInput::press(KEY_W), &[], Clw),
+        (
+            &[CL, Cle, Clr, Clf, Clw, ClTab],
+            KeyInput::press(KEY_E),
+            &[],
+            Cle,
+        ),
+        (
+            &[CL, Cle, Clr, Clf, Clw, ClTab],
+            KeyInput::press(KEY_R),
+            &[],
+            Clr,
+        ),
+        (
+            &[CL, Cle, Clr, Clf, Clw, ClTab],
+            KeyInput::press(KEY_F),
+            &[],
+            Clf,
+        ),
+        (
+            &[CL, Cle, Clr, Clf, Clw, ClTab],
+            KeyInput::press(KEY_W),
+            &[],
+            Clw,
+        ),
+        (
+            &[CL, Cle, Clr, Clf, Clw, ClTab],
+            KeyInput::press(KEY_TAB),
+            &[],
+            ClTab,
+        ),
         (&[Cle], KeyInput::press(KEY_CAPSLOCK), &[], Cle),
         (&[Clr], KeyInput::press(KEY_CAPSLOCK), &[], Clr),
         (&[Clf], KeyInput::press(KEY_CAPSLOCK), &[], Clf),
         (&[Clw], KeyInput::press(KEY_CAPSLOCK), &[], Clw),
+        (&[ClTab], KeyInput::press(KEY_CAPSLOCK), &[], ClTab),
         (
-            &[Normal, CL, Cle, Clr, Clf, Clw],
+            &[Normal, CL, Cle, Clr, Clf, Clw, ClTab],
             KeyInput::release(KEY_CAPSLOCK),
             &[],
             Normal,
@@ -485,6 +598,7 @@ fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
         (&[Clr], KeyInput::release(KEY_R), &[], CL),
         (&[Clf], KeyInput::release(KEY_F), &[], CL),
         (&[Clw], KeyInput::release(KEY_W), &[], CL),
+        (&[ClTab], KeyInput::release(KEY_TAB), &[], CL),
     ];
     let single_hotkyes = single_remap_entries.iter().flat_map(|(c, i, o, t)| {
         c.iter().map(move |c| SingleRemapEntry {
@@ -586,22 +700,22 @@ fn config_simple_remap() -> RemapLayer<()> {
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
-enum StateShiftRealease {
+enum StateShiftRelease {
     Normal,
     Shift,
     ContinuousShift,
 }
 
-fn config_shift_release() -> RemapLayer<StateShiftRealease> {
-    use StateShiftRealease::*;
+fn config_shift_release() -> RemapLayer<StateShiftRelease> {
+    use StateShiftRelease::*;
     let ps = all_keys()
         .filter(|k| *k != KEY_LEFTSHIFT && *k != KEY_SPACE)
         .map(|k| PairRemapEntry {
             condition: ContinuousShift,
-            input: [KeyInput::release(KEY_LEFTSHIFT), KeyInput::press(k)],
+            input: [KeyInput::press(k), KeyInput::release(KEY_LEFTSHIFT)],
             output: vec![KeyInput::release(KEY_LEFTSHIFT), KeyInput::press(k)],
             transition: Normal,
-            threshold: 100,
+            threshold: 80,
         })
         .collect();
     let ss = all_keys()
@@ -639,14 +753,35 @@ fn config_shift_release() -> RemapLayer<StateShiftRealease> {
     }
 }
 
+fn config_suppress_chattering() -> RemapLayer<()> {
+    let pair_remap_entries = all_keys()
+        .map(|k| PairRemapEntry {
+            condition: (),
+            input: [KeyInput::release(k), KeyInput::press(k)],
+            output: Vec::new(),
+            transition: (),
+            threshold: 20,
+        })
+        .collect();
+    RemapLayer {
+        pair_remap_entries,
+        single_remap_entries: Vec::new(),
+        layer_name: "suppress chattering",
+        initial_state: (),
+    }
+}
+
 fn main() {
-    env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
+    env_logger::Builder::from_env(Env::default().default_filter_or("debug"))
+        .format_timestamp_millis()
+        .init();
     KeyConfig::default()
+        .add_layer(config_suppress_chattering())
         .add_layer(config_simple_remap())
         .add_layer(config_caps_lock_arrow())
+        .add_layer(config_grave_arrow())
         .add_layer(config_sands())
         .add_layer(mk_config())
         .add_layer(config_shift_release())
-        .emergency_stop_key(KEY_CALC)
         .run();
 }
