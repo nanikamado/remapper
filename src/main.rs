@@ -271,17 +271,6 @@ fn mk_config() -> RemapLayer<StateGeta> {
         ),
         (
             &[Normal],
-            [KEY_W, KEY_I],
-            vec![
-                KeyInput::press(KEY_LEFTSHIFT),
-                KeyInput::press(KEY_2),
-                KeyInput::release(KEY_2),
-                KeyInput::release(KEY_LEFTSHIFT),
-            ],
-            None,
-        ),
-        (
-            &[Normal],
             [KEY_F, KEY_J],
             vec![
                 KeyInput::press(KEY_LEFTMETA),
@@ -331,7 +320,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
             Some(Normal),
         ),
     ];
-    let modifires = [
+    let modifiers = [
         KEY_LEFTCTRL,
         KEY_LEFTMETA,
         KEY_LEFTALT,
@@ -341,7 +330,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
         KEY_RIGHTALT,
         KEY_RIGHTSHIFT,
     ];
-    let modifiers_trans = modifires
+    let modifiers_trans = modifiers
         .iter()
         .flat_map(|key| {
             [
@@ -390,6 +379,21 @@ fn mk_config() -> RemapLayer<StateGeta> {
                             .order_insensitive()
                         })
                     }),
+            )
+            .chain(
+                PairRemapEntry {
+                    condition: Normal,
+                    input: [KEY_W, KEY_I].map(KeyInput::press),
+                    output: vec![
+                        KeyInput::press(KEY_LEFTSHIFT),
+                        KeyInput::press(KEY_2),
+                        KeyInput::release(KEY_2),
+                        KeyInput::release(KEY_LEFTSHIFT),
+                    ],
+                    transition: Normal,
+                    threshold: 30,
+                }
+                .order_insensitive(),
             )
             .collect(),
         single_remap_entries: key_config_r
@@ -474,7 +478,7 @@ fn config_grave_arrow() -> RemapLayer<StateGrave> {
         (&[Grave1], KeyInput::release(KEY_1), &[], Grave),
         (&[Grave1], KeyInput::release(KEY_2), &[], Grave),
     ];
-    let single_hotkyes = single_remap_entries.iter().flat_map(|(c, i, o, t)| {
+    let single_hotkeys = single_remap_entries.iter().flat_map(|(c, i, o, t)| {
         c.iter().map(move |c| SingleRemapEntry {
             condition: *c,
             input: *i,
@@ -484,7 +488,7 @@ fn config_grave_arrow() -> RemapLayer<StateGrave> {
     });
     RemapLayer {
         pair_remap_entries: Vec::new(),
-        single_remap_entries: single_hotkyes.into_iter().chain(grave_side).collect(),
+        single_remap_entries: single_hotkeys.into_iter().chain(grave_side).collect(),
         layer_name: "grave arrows",
         initial_state: Normal,
     }
@@ -600,7 +604,7 @@ fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
         (&[Clw], KeyInput::release(KEY_W), &[], CL),
         (&[ClTab], KeyInput::release(KEY_TAB), &[], CL),
     ];
-    let single_hotkyes = single_remap_entries.iter().flat_map(|(c, i, o, t)| {
+    let single_hotkeys = single_remap_entries.iter().flat_map(|(c, i, o, t)| {
         c.iter().map(move |c| SingleRemapEntry {
             condition: *c,
             input: *i,
@@ -610,7 +614,7 @@ fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
     });
     RemapLayer {
         pair_remap_entries: Vec::new(),
-        single_remap_entries: single_hotkyes.chain(capslock_side).collect(),
+        single_remap_entries: single_hotkeys.chain(capslock_side).collect(),
         layer_name: "caps lock arrows",
         initial_state: Normal,
     }
