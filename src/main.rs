@@ -192,6 +192,17 @@ fn mk_config() -> RemapLayer<StateGeta> {
         ),
         (
             &[Normal, JpInput],
+            [KEY_H, KEY_B],
+            vec![
+                KeyInput::press(KEY_LEFTSHIFT),
+                KeyInput::press(KEY_6),
+                KeyInput::release(KEY_6),
+                KeyInput::release(KEY_LEFTSHIFT),
+            ],
+            None,
+        ),
+        (
+            &[Normal, JpInput],
             [KEY_F, KEY_V],
             vec![
                 KeyInput::press(KEY_LEFTSHIFT),
@@ -273,27 +284,23 @@ fn mk_config() -> RemapLayer<StateGeta> {
             &[Normal],
             [KEY_F, KEY_J],
             vec![
-                KeyInput::press(KEY_LEFTMETA),
-                KeyInput::press(KEY_SPACE),
-                KeyInput::release(KEY_SPACE),
-                KeyInput::release(KEY_LEFTMETA),
+                KeyInput::press(KEY_LEFTSHIFT),
+                KeyInput::press(KEY_2),
+                KeyInput::release(KEY_2),
+                KeyInput::release(KEY_LEFTSHIFT),
             ],
-            Some(JpInput),
+            None,
         ),
         (
-            &[JpInput],
-            [KEY_F, KEY_J],
+            &[Normal],
+            [KEY_D, KEY_K],
             vec![
-                KeyInput::press(KEY_LEFTCTRL),
-                KeyInput::press(KEY_RIGHTBRACE),
-                KeyInput::release(KEY_RIGHTBRACE),
-                KeyInput::release(KEY_LEFTCTRL),
-                KeyInput::press(KEY_LEFTMETA),
-                KeyInput::press(KEY_SPACE),
-                KeyInput::release(KEY_SPACE),
-                KeyInput::release(KEY_LEFTMETA),
+                KeyInput::press(KEY_LEFTSHIFT),
+                KeyInput::press(KEY_1),
+                KeyInput::release(KEY_1),
+                KeyInput::release(KEY_LEFTSHIFT),
             ],
-            Some(Normal),
+            None,
         ),
         (
             &[Normal],
@@ -379,21 +386,6 @@ fn mk_config() -> RemapLayer<StateGeta> {
                             .order_insensitive()
                         })
                     }),
-            )
-            .chain(
-                PairRemapEntry {
-                    condition: Normal,
-                    input: [KEY_W, KEY_I].map(KeyInput::press),
-                    output: vec![
-                        KeyInput::press(KEY_LEFTSHIFT),
-                        KeyInput::press(KEY_2),
-                        KeyInput::release(KEY_2),
-                        KeyInput::release(KEY_LEFTSHIFT),
-                    ],
-                    transition: Normal,
-                    threshold: 30,
-                }
-                .order_insensitive(),
             )
             .collect(),
         single_remap_entries: key_config_r
@@ -521,10 +513,10 @@ fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
         (CL, KEY_DOT, &[KEY_LEFTCTRL], KEY_DOT),
         (CL, KEY_P, &[KEY_LEFTCTRL], KEY_P),
         (CL, KEY_COMMA, &[KEY_LEFTCTRL], KEY_F8),
-        (CL, KEY_H, &[KEY_LEFTCTRL], KEY_F9),
-        (CL, KEY_Y, &[KEY_LEFTCTRL], KEY_F10),
+        (CL, KEY_H, &[], KEY_ESC),
         (CL, KEY_LEFTBRACE, &[KEY_LEFTCTRL, KEY_LEFTALT], KEY_MINUS),
         (CL, KEY_RIGHTBRACE, &[KEY_LEFTSHIFT, KEY_LEFTCTRL], KEY_RO),
+        (CL, KEY_BACKSLASH, &[KEY_LEFTSHIFT, KEY_LEFTCTRL], KEY_N),
         (Cle, KEY_I, &[KEY_LEFTCTRL], KEY_UP),
         (Cle, KEY_J, &[KEY_LEFTCTRL], KEY_LEFT),
         (Cle, KEY_K, &[KEY_LEFTCTRL], KEY_DOWN),
@@ -533,10 +525,10 @@ fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
         (Clr, KEY_J, &[KEY_LEFTMETA], KEY_J),
         (Clr, KEY_K, &[KEY_LEFTMETA], KEY_K),
         (Clr, KEY_L, &[KEY_LEFTMETA], KEY_L),
-        (Clf, KEY_I, &[], KEY_ESC),
         (Clf, KEY_J, &[], KEY_HOME),
-        (Clf, KEY_K, &[], KEY_ESC),
         (Clf, KEY_L, &[], KEY_END),
+        (Clf, KEY_I, &[KEY_LEFTCTRL], KEY_F10),
+        (Clf, KEY_K, &[KEY_LEFTCTRL], KEY_F9),
         (Clw, KEY_J, &[KEY_LEFTCTRL], KEY_PAGEUP),
         (Clw, KEY_L, &[KEY_LEFTCTRL], KEY_PAGEDOWN),
         (ClTab, KEY_J, &[KEY_LEFTCTRL], KEY_PAGEUP),
