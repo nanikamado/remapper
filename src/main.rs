@@ -306,6 +306,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
             &[Normal],
             [KEY_D, KEY_S],
             vec![
+                KeyInput::press(KEY_NUMERIC_0),
                 KeyInput::press(KEY_LEFTMETA),
                 KeyInput::press(KEY_SPACE),
                 KeyInput::release(KEY_SPACE),
@@ -323,6 +324,7 @@ fn mk_config() -> RemapLayer<StateGeta> {
                 KeyInput::press(KEY_SPACE),
                 KeyInput::release(KEY_SPACE),
                 KeyInput::release(KEY_LEFTMETA),
+                KeyInput::press(KEY_NUMERIC_1),
             ],
             Some(Normal),
         ),
@@ -614,6 +616,7 @@ fn config_caps_lock_arrow() -> RemapLayer<StateCapsLock> {
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
 enum StateSands {
+    JpInput,
     Normal,
     Space,
     Shift,
@@ -623,6 +626,18 @@ fn config_sands() -> RemapLayer<StateSands> {
     use StateSands::*;
     #[allow(clippy::type_complexity)]
     let config: &[(&[StateSands], KeyInput, &[KeyInput], Option<StateSands>)] = &[
+        (
+            &[Normal, Space, Shift, JpInput],
+            KeyInput::press(KEY_NUMERIC_0),
+            &[],
+            Some(JpInput),
+        ),
+        (
+            &[Normal, Space, Shift, JpInput],
+            KeyInput::press(KEY_NUMERIC_1),
+            &[],
+            Some(Normal),
+        ),
         (
             &[Normal],
             KeyInput::press(KEY_SPACE),
@@ -749,20 +764,38 @@ fn config_shift_release() -> RemapLayer<StateShiftRelease> {
     }
 }
 
-fn config_suppress_chattering() -> RemapLayer<()> {
-    let pair_remap_entries = all_keys()
-        .map(|k| PairRemapEntry {
-            condition: (),
-            input: [KeyInput::release(k), KeyInput::press(k)],
-            output: Vec::new(),
-            transition: (),
-            threshold: 20,
-        })
-        .collect();
+// fn config_suppress_chattering() -> RemapLayer<()> {
+//     let pair_remap_entries = all_keys()
+//         .map(|k| PairRemapEntry {
+//             condition: (),
+//             input: [KeyInput::release(k), KeyInput::press(k)],
+//             output: Vec::new(),
+//             transition: (),
+//             threshold: 20,
+//         })
+//         .collect();
+//     RemapLayer {
+//         pair_remap_entries,
+//         single_remap_entries: Vec::new(),
+//         layer_name: "suppress chattering",
+//         initial_state: (),
+//     }
+// }
+
+fn config_gc() -> RemapLayer<()> {
+    let garbages = &[KEY_NUMERIC_0, KEY_NUMERIC_1];
     RemapLayer {
-        pair_remap_entries,
-        single_remap_entries: Vec::new(),
-        layer_name: "suppress chattering",
+        pair_remap_entries: Vec::new(),
+        single_remap_entries: garbages
+            .iter()
+            .map(|k| SingleRemapEntry {
+                condition: (),
+                input: KeyInput::press(*k),
+                output: Vec::new(),
+                transition: (),
+            })
+            .collect(),
+        layer_name: "gc",
         initial_state: (),
     }
 }
@@ -772,12 +805,13 @@ fn main() {
         .format_timestamp_millis()
         .init();
     KeyConfig::default()
-        .add_layer(config_suppress_chattering())
+        // .add_layer(config_suppress_chattering())
         .add_layer(config_simple_remap())
         .add_layer(config_caps_lock_arrow())
         .add_layer(config_grave_arrow())
-        .add_layer(config_sands())
         .add_layer(mk_config())
+        .add_layer(config_sands())
         .add_layer(config_shift_release())
+        .add_layer(config_gc())
         .run();
 }
